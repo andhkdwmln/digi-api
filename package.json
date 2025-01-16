@@ -1,0 +1,36 @@
+{
+  "name": "digi-api",
+  "version": "1.0.0",
+  "main": "./lib/main.js",
+  "scripts": {
+    "clean": "rimraf lib && rimraf typings",
+    "build": "npm run clean && tsc --build tsconfig.json"
+  },
+  "repository": {
+    "url": "git+https://github.com/andhkdwmln/digi-api.git"
+  },
+  "publishConfig": {
+    "@andhkdwmln:registry": "https://npm.pkg.github.com"
+  },
+  "author": "Andhika Dwi Maulana",
+  "license": "MIT",
+  "description": "トランザクションを行うための Digiflazz の非公式 API。",
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/node-fetch": "^2.6.4",
+    "rimraf": "^5.0.1"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "node-fetch": "^2.6.4",
+    "typescript": "^5.6.3"
+  },
+  "bugs": {
+    "url": "https://github.com/andhkdwmln/digi-api/issues"
+  },
+  "homepage": "https://github.com/andhkdwmln/digi-api#readme",
+  "directories": {
+    "lib": "lib"
+  }
+}
