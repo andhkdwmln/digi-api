@@ -23,7 +23,9 @@ export class Topup {
 
     }
 
-
+    /*
+    * @return {Promise<any>} - Return current balance
+    */
     public async Saldo () {
 
         try {
@@ -37,6 +39,41 @@ export class Topup {
                     'cmd': 'deposit',
                     'username': this._username,
                     'sign': createMD5Encrypt(this._username + this._apiKey + 'depo')
+                })
+            });
+            
+            const res = await req.json();
+            return res;
+
+        } catch (e) {
+            return e;
+        }
+    }
+
+    /*
+    * @param {string} method - Method for topup (prepaid or pasca)
+    * @param {string} skucode - buyer sku code
+    * @param {string} category - Category for topup (pulsa, paket-data, pln, etc)
+    * @param {string} brand - Brand for topup (telkomsel, indosat, pln, etc)
+    * @param {string} type - Type for topup (umum, membership, etc)
+    */
+    public async DaftarHarga (method: string, skucode: string, category: string, brand: string, type: string) {
+
+        try {
+
+            const req = await fetch(this._url + '/v1/price-list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'cmd': method ? method : 'prepaid',
+                    'username': this._username,
+                    'code': skucode ? skucode : null,
+                    'category': category ? category : null,
+                    'brand': brand ? brand : null,
+                    'type': type ? type : null,
+                    'sign': createMD5Encrypt(this._username + this._apiKey + 'pricelist')
                 })
             });
             
