@@ -1,5 +1,4 @@
 import fetch = require("node-fetch");
-require('dotenv').config();
 
 import { createMD5Encrypt, createRandomID } from "./helpers/helpers";
 
@@ -7,15 +6,16 @@ export class Topup {
 
     private _url: string;
     private _username: string;
+    private _mode: string;
     private _apiKey: string;
 
-    constructor () {
+    constructor (username: string, apiKeydev: string, apiKeyprod: string) {
 
         this._url = "https://api.digiflazz.com";
 
-        // DIGIFLAZZ DATA
-        this._username = process.env.API_USERNAME || "";
-        this._apiKey = process.env.NODE_ENV === "development" ? process.env.API_DEVELOPMENT || "" : process.env.API_PRODUCTION || "";
+        this._username = username;
+        this._mode = 'development'; // development or production
+        this._apiKey = this._mode === 'development' ? apiKeydev : apiKeyprod;
 
     }
 
