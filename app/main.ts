@@ -1,7 +1,7 @@
 import fetch = require("node-fetch");
 require('dotenv').config();
 
-import { createMD5Encrypt } from "./helpers/helpers";
+import { createMD5Encrypt, createRandomID } from "./helpers/helpers";
 
 export class Topup {
 
@@ -56,6 +56,8 @@ export class Topup {
     * @param {string} category - Category for topup (pulsa, paket-data, pln, etc)
     * @param {string} brand - Brand for topup (telkomsel, indosat, pln, etc)
     * @param {string} type - Type for topup (umum, membership, etc)
+    * 
+    * @return {Promise<any>} - Return List of price
     */
     public async DaftarHarga (method: string, skucode: string, category: string, brand: string, type: string) {
 
@@ -83,6 +85,36 @@ export class Topup {
         } catch (e) {
             return e;
         }
+    }
+
+
+    public async Transaksi (buyer_sku_code: string, customer_number: string) {
+
+        try {
+
+            let ref_id = createRandomID();
+
+            const req = await fetch(this._url + '/v1/transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'username': this._username,
+                    'buyer_sku_code': buyer_sku_code,
+                    'customer_no': customer_number,
+                    'ref_id': ref_id,
+                    'sign': createMD5Encrypt(this._username + this._apiKey + ref_id)
+                })
+            });
+
+            const res = await req.json();
+            return res;
+            
+        } catch (e) {
+            return e;
+        }
+
     }
 
 }
