@@ -6,16 +6,14 @@ export class Topup {
 
     private _url: string;
     private _username: string;
-    private _mode: string;
     private _apiKey: string;
 
-    constructor (username: string, apiKeydev: string, apiKeyprod: string) {
+    constructor (username: string, apiKey: string) {
 
         this._url = "https://api.digiflazz.com";
 
         this._username = username;
-        this._mode = 'development'; // development or production
-        this._apiKey = this._mode === 'development' ? apiKeydev : apiKeyprod;
+        this._apiKey = apiKey;
 
     }
 
